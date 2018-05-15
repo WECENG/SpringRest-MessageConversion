@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <Meta http-equiv="Content-Type" Content="application/json; Charset=utf-8">
+    <title>Title</title>
+</head>
+<!--将数据以json格式发送到后台-->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    function GetJsonData() {
+        var json = {
+            "id": 17,
+            "name": "orange",
+            "descr": "yellow",
+            "price": 6,
+            "quantity": 10
+        };
+        return json;
+    }
+    function getProduct() {
+        $.ajax({
+            type: "POST",
+            url: "save",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(GetJsonData()),
+            success:function(message) {
+                    //将返回的数据在页面显示
+                    document.body.innerHTML=("Name:  "+message.name+"   Description:  "+message.descr);
+            },
+            error: function (message) {
+                $("#request-process-patent").html("提交数据失败！");
+            }
+        });
+    }
+</script>
+
+<body>
+    <input type="button" th:name="button" th:value="提交" onclick="getProduct()"/>
+</body>
+</html>
